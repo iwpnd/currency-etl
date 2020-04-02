@@ -3,6 +3,7 @@ import datetime
 from pydantic import BaseModel
 from pydantic import confloat
 from pydantic import StrictStr
+from pydantic import validator
 
 
 class Rates(BaseModel):
@@ -44,4 +45,8 @@ class ConversionRates(BaseModel):
     rates: Rates
     base: StrictStr = None
     date: StrictStr = None
-    utc_created_at: StrictStr = str(datetime.datetime.utcnow())
+    utc_created_at: StrictStr = None
+
+    @validator("utc_created_at", pre=True, always=True)
+    def set_utc_now(cls, v):
+        return str(datetime.datetime.utcnow())
