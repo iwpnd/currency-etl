@@ -58,7 +58,7 @@ def create_outputfile(filename: str, conversion_rates: ConversionRates) -> None:
 
 def write_conversion_rates_to_csv(
     conversion_rates: ConversionRates, output_file: str = "output.csv"
-):
+) -> None:
 
     if not output_file_exists(output_file):
         create_outputfile(conversion_rates=conversion_rates, filename=output_file)

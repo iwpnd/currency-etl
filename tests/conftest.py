@@ -1,5 +1,12 @@
 import pytest
 
+from currencyetl.models import ConversionRates
+
+
+@pytest.fixture
+def mock_conversion_rates(mock_request_data_valid):
+    return ConversionRates(**mock_request_data_valid)
+
 
 @pytest.fixture
 def mock_request_data_valid():
@@ -40,7 +47,6 @@ def mock_request_data_valid():
         },
         "base": "USD",
         "date": "2020-03-31",
-        "utc_created_at": "2020-04-01 13:36:38.651331",
     }
 
 
@@ -83,5 +89,4 @@ def mock_request_data_invalid():
         },
         "base": "USD",
         "date": "2020-03-31",
-        "utc_created_at": "2020-04-01 13:36:38.651331",
     }
