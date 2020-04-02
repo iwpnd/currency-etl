@@ -40,7 +40,7 @@ class Rates(BaseModel):
     PLN: confloat(gt=0) = None
 
 
-class Response(BaseModel):
+class ConversionRates(BaseModel):
     rates: Rates
     base: StrictStr = None
     date: StrictStr = None

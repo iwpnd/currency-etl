@@ -3,8 +3,8 @@ from contextlib import nullcontext
 import pytest
 from pydantic import ValidationError
 
-from currencyetl.response import Rates
-from currencyetl.response import Response
+from currencyetl.models import ConversionRates
+from currencyetl.models import Rates
 
 
 valid_rates = {
@@ -85,7 +85,7 @@ invalid_rates = {
         pytest.param(invalid_rates, pytest.raises(ValidationError), id="invalid_input"),
     ],
 )
-def test_response_rates(data, expectation):
+def test_rates_model(data, expectation):
     with expectation:
         currency_rates = Rates(**data)
 
@@ -110,6 +110,6 @@ def test_response_rates(data, expectation):
         ),
     ],
 )
-def test_response(data, expectation):
+def test_conversion_rate_model(data, expectation):
     with expectation:
-        response = Response(**data)
+        response = ConversionRates(**data)

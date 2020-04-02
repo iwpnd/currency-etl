@@ -1,16 +1,16 @@
 import requests
 
 from currencyetl import settings
-from currencyetl.response import Response
+from currencyetl.models import ConversionRates
 
 
-def request_currency_rates(
+def request_conversion_rates(
     api_url: str = settings.API_URL, timeout: int = 1
-) -> Response:
+) -> ConversionRates:
     """ Request currency rates from settings.API_URL
 
         Request currency rates from settings.API_URL and unpack
-        the resulting response.json() into a Response() object
+        the resulting response.json() into a ConversionRates() object
         for validation
 
         Arguments:
@@ -22,5 +22,6 @@ def request_currency_rates(
     """
 
     response = requests.get(api_url, timeout=timeout)
+    conversion_rates = ConversionRates(**response.json())
 
-    return Response(**response.json())
+    return conversion_rates
