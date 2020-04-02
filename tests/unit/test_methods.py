@@ -1,3 +1,4 @@
+import csv
 from os import path
 
 import pytest
@@ -9,6 +10,7 @@ from currencyetl.methods import create_fieldnames
 from currencyetl.methods import create_outputfile
 from currencyetl.methods import output_file_exists
 from currencyetl.methods import request_conversion_rates
+from currencyetl.methods import write_conversion_rates_to_csv
 from currencyetl.models import ConversionRates
 
 
@@ -68,3 +70,30 @@ def test_create_outputfile(tmpdir, mock_conversion_rates):
         file.read()
         == ",".join(create_fieldnames(conversion_rates=mock_conversion_rates)) + "\n"
     )  # check if header is created properly
+
+
+def test_write_conversion_rates_to_csv(tmpdir, mock_conversion_rates):
+    file = tmpdir.join("output.csv")
+    write_conversion_rates_to_csv(
+        conversion_rates=mock_conversion_rates, output_file=file
+    )
+
+    csv_file = open(file)
+    reader = csv.reader(csv_file)
+
+    assert path.exists(file)
+    assert len(list(reader)) == 2
+
+
+def test_write_conversion_rates_to_csv_append(tmpdir, mock_request_data_valid):
+    file = tmpdir.join("output.csv")
+    rates1 = ConversionRates(**mock_request_data_valid)
+    write_conversion_rates_to_csv(conversion_rates=rates1, output_file=file)
+    rates2 = ConversionRates(**mock_request_data_valid)
+    write_conversion_rates_to_csv(conversion_rates=rates2, output_file=file)
+
+    csv_file = open(file)
+    reader = csv.reader(csv_file)
+
+    assert path.exists(file)
+    assert len(list(reader)) == 3
