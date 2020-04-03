@@ -21,4 +21,8 @@ setup(
         "Programming Language :: Python :: 3",
         "Intended Audience :: Data Scientists",
     ],
+    entry_points="""
+        [console_scripts]
+        currencyetl=currencyetl.cli:cli
+    """,
 )

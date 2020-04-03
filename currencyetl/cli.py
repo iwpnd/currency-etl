@@ -38,25 +38,35 @@ def main(timeout: int, output_file: str) -> None:
     )
 
 
+def job():
+    print("I'm working...")
+
+
 @click.group()
 def cli():
     pass
 
 
 @click.command()
-@click.option("--timeout", default=1, help="seconds until request timeout")
 @click.option(
-    "--output_file", default=settings.OUTPUT_FILE, help="file to write output to"
+    "--timeout", default=settings.REQUEST_TIMEOUT, help="seconds until request timeout"
 )
-@click.option("--interval", default=10, help="cron intervall in minutes")
-@click.option("--logfile", default=False, is_flag=True)
+@click.option(
+    "--output_file", default=settings.OUTPUT_FILE, help="csvfile to write output to"
+)
+@click.option(
+    "--interval",
+    default=settings.CRON_INTERVAL_MINUTES,
+    help="cron intervall in minutes",
+)
+@click.option("--logfile/--no-logfile", default=settings.DEBUG)
 def start(timeout: int, output_file: str, interval: int, logfile: bool) -> None:
 
     if logfile:
         logger.add("file.log", enqueue=True)
 
-    click.echo("Initializing")
-    schedule.every(interval).seconds.do(main, output_file=output_file, timeout=timeout)
+    click.echo("Initializing cronjob")
+    schedule.every(interval).minutes.do(main, output_file=output_file, timeout=timeout)
 
     while True:
         schedule.run_pending()
