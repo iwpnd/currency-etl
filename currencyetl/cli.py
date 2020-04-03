@@ -49,17 +49,25 @@ def cli():
 
 @click.command()
 @click.option(
-    "--timeout", default=settings.REQUEST_TIMEOUT, help="seconds until request timeout"
+    "--timeout",
+    default=settings.REQUEST_TIMEOUT,
+    help=f"seconds until request timeout (default: {settings.REQUEST_TIMEOUT})",
 )
 @click.option(
-    "--output_file", default=settings.OUTPUT_FILE, help="csvfile to write output to"
+    "--output_file",
+    default=settings.OUTPUT_FILE,
+    help=f"csvfile to write output to (default: {settings.OUTPUT_FILE})",
 )
 @click.option(
     "--interval",
     default=settings.CRON_INTERVAL_MINUTES,
-    help="cron intervall in minutes",
+    help=f"cron intervall in minutes (default: {settings.CRON_INTERVAL_MINUTES})",
 )
-@click.option("--logfile/--no-logfile", default=settings.DEBUG)
+@click.option(
+    "--logfile/--no-logfile",
+    default=settings.DEBUG,
+    help=f"write logs to file (default: {settings.DEBUG})",
+)
 def start(timeout: int, output_file: str, interval: int, logfile: bool) -> None:
 
     if logfile:
