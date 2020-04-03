@@ -32,13 +32,24 @@ def request_conversion_rates(
 
 
 def output_file_exists(filename: str) -> bool:
-    """
+    """Check if filename exists
+
+        Argument:
+                filename (str): filename to check
+        Returns:
+                bool
     """
     return path.exists(filename)
 
 
 def create_fieldnames(conversion_rates: ConversionRates) -> list:
-    """
+    """ Create a list of fieldnames for a csv header
+
+        Arguments:
+            conversion_rates (ConversionRates)
+
+        Returns:
+            list
     """
     fieldnames = [
         key for key in conversion_rates.dict().keys() if key != "rates"
@@ -48,7 +59,14 @@ def create_fieldnames(conversion_rates: ConversionRates) -> list:
 
 
 def create_outputfile(filename: str, conversion_rates: ConversionRates) -> None:
-    """
+    """ Create an output file to store conversion rates in.
+
+        Arguments:
+            filename (str): name of the file
+            conversion_rates (ConversionRates): requested conversion rates
+
+        Returns:
+            None
     """
     with open(filename, "w") as output:
         fieldnames = create_fieldnames(conversion_rates=conversion_rates)
@@ -59,6 +77,20 @@ def create_outputfile(filename: str, conversion_rates: ConversionRates) -> None:
 def write_conversion_rates_to_csv(
     conversion_rates: ConversionRates, output_file: str = "output.csv"
 ) -> None:
+
+    """ Write conversion rates to file
+
+        If file does not exist, calls create_outputfile() to create it.
+        Then opens the output file as a contextmanager and appends
+        most recent rates.
+
+        Arguments:
+            output_file (str): name of the csv file
+            conversion_rates (ConversionRates): requested conversion rates
+
+        Returns:
+            None
+    """
 
     if not output_file_exists(output_file):
         create_outputfile(conversion_rates=conversion_rates, filename=output_file)

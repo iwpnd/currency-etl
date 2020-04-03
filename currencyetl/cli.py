@@ -1,5 +1,6 @@
 import functools
 import time
+from typing import Callable
 
 import click
 import schedule
@@ -9,7 +10,19 @@ from currencyetl import methods
 from currencyetl import settings
 
 
-def catch_exceptions(cancel_on_failure: bool = False):
+def catch_exceptions(cancel_on_failure: bool = False) -> Callable:
+    """Catch an exception in a scheduled job.
+
+    Catch an exception in a scheduled job. Either cancel future executions
+    or continue with next scheduled execution.
+
+    Arguments:
+            cancel_on_failure (bool): defaults to False
+
+    Returns:
+            Callable
+    """
+
     def catch_exceptions_decorator(job_func):
         @functools.wraps(job_func)
         def wrapper(*args, **kwargs):
@@ -29,6 +42,15 @@ def catch_exceptions(cancel_on_failure: bool = False):
 
 @catch_exceptions(cancel_on_failure=settings.CANCEL_ON_FAILURE)
 def main(timeout: int, output_file: str) -> None:
+    """ Get conversion rates and write them to csv.
+
+    Arguments:
+            timeout (int): request timeout in seconds
+            output_file (str): csv file to write output to
+
+    Returns:
+            None
+    """
 
     logger.info("Fetching conversion rates for: USD")
     conversion_rates = methods.request_conversion_rates(timeout=timeout)

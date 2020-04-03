@@ -7,6 +7,9 @@ from pydantic import validator
 
 
 class Rates(BaseModel):
+    """ Pydantic model to store conversion rates in
+    """
+
     HKD: confloat(gt=0) = None
     ISK: confloat(gt=0) = None
     PHP: confloat(gt=0) = None
@@ -42,6 +45,9 @@ class Rates(BaseModel):
 
 
 class ConversionRates(BaseModel):
+    """ Pydantic model to store conversion rates
+    """
+
     rates: Rates
     base: StrictStr = None
     date: StrictStr = None
