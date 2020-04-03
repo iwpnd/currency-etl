@@ -38,10 +38,6 @@ def main(timeout: int, output_file: str) -> None:
     )
 
 
-def job():
-    print("I'm working...")
-
-
 @click.group()
 def cli():
     pass
