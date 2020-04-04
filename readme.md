@@ -29,7 +29,7 @@ DEBUG=true
 clone the repository and install the repository:
 ```bash
 git clone https://github.com/iwpnd/currency-etl.git
-pip install -e /currency-etl
+pip install -e currency-etl
 ```
 
 ### testing
