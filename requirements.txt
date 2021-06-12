@@ -2,7 +2,7 @@ requests==2.22.0
 requests-mock==1.7.0
 pytest==5.3.4
 pytest-cov==2.8.1
-pydantic==1.4
+pydantic==1.6.2
 schedule==0.6.0
 click==7.0
 python-dotenv==0.12.0
